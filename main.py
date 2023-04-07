@@ -5,6 +5,9 @@ import time
 import os
 import pygame
 
+# Our custom AI module
+import ai
+
 
 class Agent(threading.Thread):
 
@@ -31,8 +34,11 @@ class Agent(threading.Thread):
     #############################################################
     #      YOUR SUPER COOL ARTIFICIAL INTELLIGENCE HERE!!!      #
     #############################################################
+       
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
+        print(self.move_grid)
+        # ai.search_move_grid_dfs()
         return
 
     def run(self):
