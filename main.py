@@ -37,8 +37,24 @@ class Agent(threading.Thread):
        
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
-        print(self.move_grid)
-        # ai.search_move_grid_dfs()
+
+        if ai.lock:
+            print(self.tanuki_c)
+            print(self.tanuki_r)
+            f_map = ai.search_move_grid_dfs(self.move_grid, self.tanuki_r, self.tanuki_c, 8)
+            print(f_map)
+
+        self.game.on_key_press(arcade.key.LEFT, None)
+            
+        ai.lock = False
+        # Find the goal point by iterating over all the poits and finding the octothorpe
+        # Save the position of the octothorpe and pass that into the ai function
+        # The ai function should return a list of poits
+        # Four if statement that compare the points and then calcuates if it's
+        # up down left or right
+        # tldr; Find the goal
+        # Get path
+        # Based on path move tanuki
         return
 
     def run(self):
