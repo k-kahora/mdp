@@ -4,8 +4,6 @@ import threading
 import time
 import os
 import pygame
-import markov
-# Our custom AI module
 
 
 class Agent(threading.Thread):
@@ -33,16 +31,8 @@ class Agent(threading.Thread):
     #############################################################
     #      YOUR SUPER COOL ARTIFICIAL INTELLIGENCE HERE!!!      #
     #############################################################
-       
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
-        print("In AI fn")
-        current_position = (self.tanuki_c, self.tanuki_r)
-        space = self.move_grid
-
-        markov.mdp(current_position, space)
-
-
         return
 
     def run(self):
