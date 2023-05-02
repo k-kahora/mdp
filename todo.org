@@ -1,0 +1,33 @@
+* Implement Markov Descion Process
+** Define
+*** State Space
+*** Define the action space
+*** Define the transitioin funcion
+** Set current state to the initial state
+** Policy
+* guide
+Define the MDP:
+
+    Define the state space
+    Define the action space
+    Define the reward function
+    Define the transition function
+
+Initialize the environment:
+
+    Set the current state to an initial state
+    Draw the environment using Pygame (e.g., grid world, maze)
+
+Implement the policy:
+
+    Define the policy function that maps states to actions
+    Use the policy to select an action at each time step
+
+Implement the main loop:
+
+    Repeat until a terminal state is reached:
+        Get the current state
+        Use the policy to select an action
+        Update the state based on the transition function and the selected action
+        Compute the reward based on the reward function and the new state
+        Update the display using Pygame (e.g., move the player, update the score)
