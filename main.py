@@ -4,9 +4,8 @@ import threading
 import time
 import os
 import pygame
-
+import markov
 # Our custom AI module
-import ai
 
 
 class Agent(threading.Thread):
@@ -37,76 +36,13 @@ class Agent(threading.Thread):
        
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
+        print("In AI fn")
+        current_position = (self.tanuki_c, self.tanuki_r)
+        space = self.move_grid
 
-        if ai.lock:
-            print(self.tanuki_c)
-            print(self.tanuki_r)
-            ai.f_map = ai.search_move_grid_dfs(self.move_grid, self.tanuki_r, self.tanuki_c, 8)[::-1]
-            print(ai.f_map)
+        markov.mdp(current_position, space)
 
 
-        print("Length")
-        current = ai.f_map[ai.count]
-        current_r = current[0]
-        current_c = current[1]
-
-        next_point = ai.f_map[ai.count + 1]
-        next_r = next_point[0]
-        next_c = next_point[1]
-
-        print(str(current_r) + ", " + str(current_c))
-        print(str(next_r) + ", " + str(next_c))
-        self.game.on_key_press(arcade.key.LEFT, None)
-
-        ai.count += 1
-        # -1 is left
-        # 1 is right
-        # -2 is down
-        # 2 is up
-        # -1,
-            # We go up
-        if current_r - next_r > 0:
-           if ai.current_dir != 2:
-               print("Direction Swap Up")
-               self.game.on_key_press(arcade.key.UP, None)
-           self.game.on_key_press(arcade.key.UP, None)
-           print("Up")
-           ai.current_dir = 2
-            # We go down
-        elif current_r - next_r < 0:
-           if ai.current_dir != -2:
-               print("Direction Swap Down")
-               self.game.on_key_press(arcade.key.DOWN, None)
-           self.game.on_key_press(arcade.key.DOWN, None)
-           print("Down")
-           ai.current_dir = -2
-            # We go right
-        elif current_c - next_c > 0:
-           if ai.current_dir != -1:
-               print("Direction Swap Left")
-               self.game.on_key_press(arcade.key.LEFT, None)
-           self.game.on_key_press(arcade.key.LEFT, None)
-            # We go left
-           print("Left")
-           ai.current_dir = -1
-        elif current_c - next_c < 0:
-           if ai.current_dir != 1:
-               print("Direction Swap Right")
-               self.game.on_key_press(arcade.key.RIGHT, None)
-           self.game.on_key_press(arcade.key.RIGHT, None)
-           print("Right")
-           ai.current_dir = 1            
-            
-        ai.lock = False
-        # Each time a dirction changes we need to input twice
-        # Find the goal point by iterating over all the poits and finding the octothorpe
-        # Save the position of the octothorpe and pass that into the ai function
-        # The ai function should return a list of poits
-        # Four if statement that compare the points and then calcuates if it's
-        # up down left or right
-        # tldr; Find the goal
-        # Get path
-        # Based on path move tanuki
         return
 
     def run(self):
@@ -146,7 +82,7 @@ class Agent(threading.Thread):
                 self.total_score, self.total_time, self.total_life, self.tanuki_r, self.tanuki_c \
                 = self.game.get_game_state()
 
-            # self.ai_function()
+            self.ai_function()
 
             # Display grid information (can be turned off if performance issue exists)
             if self.show_grid_info:
