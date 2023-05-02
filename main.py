@@ -82,7 +82,7 @@ class Agent(threading.Thread):
                 self.total_score, self.total_time, self.total_life, self.tanuki_r, self.tanuki_c \
                 = self.game.get_game_state()
 
-            self.ai_function()
+            # self.ai_function()
 
             # Display grid information (can be turned off if performance issue exists)
             if self.show_grid_info:
