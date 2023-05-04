@@ -36,16 +36,23 @@ class Agent(threading.Thread):
     #############################################################
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
+
         # print("In AI fn")
         current_position = (self.tanuki_r, self.tanuki_c)
-        current_position
         space = self.move_grid
         if self.mk_flag:
             print("here")
             self.mk_flag = False
             self.optimal_policy = markov.mdp(space)
 
+        if markov.states[current_position]["living_reward"] > 0:
+            print("goal")
+            self.mk_flag = True
+            space[current_position[0]][current_position[1]] = 1
         current_move = self.optimal_policy[current_position]
+        # pseudo
+        # if we reached a goal then make sure to remove the item at theat point
+        # and then recall the mdp
 
         match current_move:
            case "right":
@@ -56,6 +63,7 @@ class Agent(threading.Thread):
               self.game.on_key_press(arcade.key.DOWN, None)
            case "up":
               self.game.on_key_press(arcade.key.UP, None)
+
 
         return
 

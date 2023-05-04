@@ -1,6 +1,8 @@
 # current pos must be a tulpe
 # map is the grid world
 
+    
+
 
 
 states = {}
@@ -10,7 +12,6 @@ def mdp(grid_world):
     # print(grid_world)
     living_reward = 0
     goal_reward = 1.00
-
 
     # Assing states to dict
     for i in range(len(grid_world)):
