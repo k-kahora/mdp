@@ -16,6 +16,7 @@ class Agent(threading.Thread):
         self.name = name
         self.counter = counter
         self.show_grid_info = show_grid_info
+        self.flag = True
 
         self.game = []
         self.move_grid = []
@@ -83,7 +84,9 @@ class Agent(threading.Thread):
                 self.total_score, self.total_time, self.total_life, self.tanuki_r, self.tanuki_c \
                 = self.game.get_game_state()
 
-            self.ai_function()
+            if self.flag:
+                self.flag = False
+                self.ai_function()
 
             # Display grid information (can be turned off if performance issue exists)
             if self.show_grid_info:
