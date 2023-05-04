@@ -4,7 +4,7 @@
 
 
 states = {}
-def mdp(curentPos, grid_world):
+def mdp(grid_world):
     # Easily adjust living_reward to get differnt policys
     # Should be negative to get a time insentive
     # print(grid_world)
@@ -140,8 +140,8 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           # if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
-            if grid_world[i][j] == 9: 
-                states[(i,j)]["living_reward"] = 100
+            if grid_world[i][j] == 10: 
+                states[(i,j)]["living_reward"] = 1
         # print("")
           
 

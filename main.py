@@ -16,7 +16,8 @@ class Agent(threading.Thread):
         self.name = name
         self.counter = counter
         self.show_grid_info = show_grid_info
-        self.flag = True
+        self.mk_flag = True
+        self.mk_optimal_policy = {}
 
         self.game = []
         self.move_grid = []
@@ -34,29 +35,30 @@ class Agent(threading.Thread):
     #############################################################
     #      YOUR SUPER COOL ARTIFICIAL INTELLIGENCE HERE!!!      #
     #############################################################
-       
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
         # print("In AI fn")
         current_position = (self.tanuki_r, self.tanuki_c)
         space = self.move_grid
 
-        optimal_policy = markov.mdp(current_position, space)
+        if self.mk_flag:
+            self.flag = False
+            self.optimal_policy = markov.mdp(space)
 
-        current_move = optimal_policy[(current_position)]
+        current_move = self.optimal_policy[current_position]
 
         match current_move:
            case "right":
-              print("right")
+              self.game.on_key_press(arcade.key.RIGHT, None)      
            case "left":
-              print("left")
+              self.game.on_key_press(arcade.key.LEFT, None)      
            case "down":
-              print("down")
+              self.game.on_key_press(arcade.key.DOWN, None)
            case "up":
-              print("up")
-
+              self.game.on_key_press(arcade.key.UP, None)
 
         return
+
 
     def run(self):
         print("Starting " + self.name)
@@ -95,9 +97,7 @@ class Agent(threading.Thread):
                 self.total_score, self.total_time, self.total_life, self.tanuki_r, self.tanuki_c \
                 = self.game.get_game_state()
 
-            if self.flag:
-                self.flag = False
-                self.ai_function()
+            self.ai_function()
 
             # Display grid information (can be turned off if performance issue exists)
             if self.show_grid_info:
