@@ -11,7 +11,6 @@ def mdp(curentPos, grid_world):
     living_reward = 0
     goal_reward = 1.00
 
-    print(grid_world)
 
     # Assing states to dict
     for i in range(len(grid_world)):
@@ -33,7 +32,7 @@ def mdp(curentPos, grid_world):
     find_goal_and_prizes(grid_world, states)
     # print(states)
 
-    value_iteration(states, actions)
+    return value_iteration(states, actions)
 
     # 8 is a cheryy so 100 pts
     # 9 is is a 500 point bag
@@ -106,8 +105,9 @@ def value_iteration(S, A, gamma=0.9):
     V = {s: 0 for s in S}
 
     count = 0
-    print(T((9,4),"left"))
-    print(states[(11,1)]["tile"])
+    # test case
+    # print(T((9,4),"left"))
+    # print(states[(11,1)]["tile"])
     optimal_policy = {s: 0 for s in S}
     while count <= MAX_ITERATIONS:
         # Dynamic programming keep copy of previous calculation
@@ -128,7 +128,7 @@ def value_iteration(S, A, gamma=0.9):
             V[s] = max(Q.values())
             optimal_policy[s] = max(Q, key=Q.get)
             
-    print(optimal_policy)
+    return optimal_policy
     # First iteration will be all zero's
     # Next iteraiton will set rewards based on locatioin of the rewards
     # print(V)

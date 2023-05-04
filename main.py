@@ -38,11 +38,22 @@ class Agent(threading.Thread):
     def ai_function(self):
         # To send a key stroke to the game, use self.game.on_key_press() method
         # print("In AI fn")
-        current_position = (self.tanuki_c, self.tanuki_r)
+        current_position = (self.tanuki_r, self.tanuki_c)
         space = self.move_grid
 
+        optimal_policy = markov.mdp(current_position, space)
 
-        markov.mdp(current_position, space)
+        current_move = optimal_policy[(current_position)]
+
+        match current_move:
+           case "right":
+              print("right")
+           case "left":
+              print("left")
+           case "down":
+              print("down")
+           case "up":
+              print("up")
 
 
         return
