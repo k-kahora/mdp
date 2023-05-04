@@ -1,5 +1,8 @@
 # current pos must be a tulpe
 # map is the grid world
+
+
+
 states = {}
 def mdp(curentPos, grid_world):
     # Easily adjust living_reward to get differnt policys
@@ -96,13 +99,14 @@ def T(s, a):
 def value_iteration(S, A, gamma=0.9):
     # One to start to see if each iteration is making sense
     # As I gain confidence in the algo I will increase iteratiions 
-    MAX_ITERATIONS = 2
+    MAX_ITERATIONS = 100
 
     V = {s: 0 for s in S}
 
     count = 0
     print(T((9,4),"left"))
     print(states[(11,1)]["tile"])
+    optimal_policy = {s: 0 for s in S}
     while count <= MAX_ITERATIONS:
         # Dynamic programming keep copy of previous calculation
         V_prev = V.copy()
@@ -120,7 +124,8 @@ def value_iteration(S, A, gamma=0.9):
             #     return
 
             V[s] = max(Q.values())
-        print(V)
+            optimal_policy[s] = max(Q, key=Q.get)
+        print(optimal_policy)
             
     # First iteration will be all zero's
     # Next iteraiton will set rewards based on locatioin of the rewards
@@ -133,7 +138,7 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           # if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
-            if grid_world[i][j] == 10:
+            if grid_world[i][j] == 10: 
                 states[(i,j)]["living_reward"] = 100
         # print("")
           
