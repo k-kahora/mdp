@@ -48,11 +48,11 @@ def valid_move(s,a,s_prime):
     # 1 to ignore the floor
     # only go up if state above is a 6
     # Code is reduntdant just trying to get it working
-    # You can only go up if previous state was a 6
     up_check = check_bounds(s_prime, (s_prime[0] - 1, s_prime[1]))
     right_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
     left_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
     if a == "up":
+        # You can only go up if previous state was a 6
         if states[s]["tile"] == 6:
             return s_prime
     if a == "left":
@@ -140,7 +140,7 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           # if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
-            if grid_world[i][j] == 10: 
+            if grid_world[i][j] == 9: 
                 states[(i,j)]["living_reward"] = 100
         # print("")
           
