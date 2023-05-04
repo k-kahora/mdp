@@ -5,8 +5,7 @@ import time
 import os
 import pygame
 import markov
-# Our custom AI module
-
+# Our custom AI 
 
 class Agent(threading.Thread):
 
@@ -39,10 +38,11 @@ class Agent(threading.Thread):
         # To send a key stroke to the game, use self.game.on_key_press() method
         # print("In AI fn")
         current_position = (self.tanuki_r, self.tanuki_c)
+        current_position
         space = self.move_grid
-
         if self.mk_flag:
-            self.flag = False
+            print("here")
+            self.mk_flag = False
             self.optimal_policy = markov.mdp(space)
 
         current_move = self.optimal_policy[current_position]

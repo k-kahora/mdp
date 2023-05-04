@@ -139,9 +139,8 @@ def find_goal_and_prizes(grid_world, states):
     for i in range(len(grid_world)):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
-          # if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
-            if grid_world[i][j] == 10: 
-                states[(i,j)]["living_reward"] = 1
+          if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
+              states[(i,j)]["living_reward"] = 1
         # print("")
           
 
