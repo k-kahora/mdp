@@ -48,16 +48,18 @@ def valid_move(s,a,s_prime):
     # 1 to ignore the floor
     # only go up if state above is a 6
     # Code is reduntdant just trying to get it working
+    # You can only go up if previous state was a 6
+    up_check = check_bounds(s_prime, (s_prime[0] - 1, s_prime[1]))
     right_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
     left_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
     if a == "up":
-        if states[s_prime]["tile"] == 6:
+        if states[s]["tile"] == 6:
             return s_prime
     if a == "left":
-        if states[left_check]["tile"] == 4:
+        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
             return s_prime
     if a == "right":
-        if states[right_check]["tile"] == 4:
+        if states[right_check]["tile"] == 4 or states[right_check]["tile"] == 6:
             return s_prime
     if a == "down":
         if states[s_prime]["tile"] == 6:
@@ -99,7 +101,7 @@ def T(s, a):
 def value_iteration(S, A, gamma=0.9):
     # One to start to see if each iteration is making sense
     # As I gain confidence in the algo I will increase iteratiions 
-    MAX_ITERATIONS = 100
+    MAX_ITERATIONS = 1000
 
     V = {s: 0 for s in S}
 
@@ -125,8 +127,8 @@ def value_iteration(S, A, gamma=0.9):
 
             V[s] = max(Q.values())
             optimal_policy[s] = max(Q, key=Q.get)
-        print(optimal_policy)
             
+    print(optimal_policy)
     # First iteration will be all zero's
     # Next iteraiton will set rewards based on locatioin of the rewards
     # print(V)
@@ -143,4 +145,4 @@ def find_goal_and_prizes(grid_world, states):
         # print("")
           
 
-            
+
