@@ -63,6 +63,12 @@ class Agent(threading.Thread):
               self.game.on_key_press(arcade.key.DOWN, None)
            case "up":
               self.game.on_key_press(arcade.key.UP, None)
+           case "jump_right":
+              self.game.on_key_press(arcade.key.RIGHT, None)
+              self.game.on_key_press(arcade.key.SPACE, None)
+           case "jump_left":
+              self.game.on_key_press(arcade.key.LEFT, None)
+              self.game.on_key_press(arcade.key.SPACE, None)
 
 
         return

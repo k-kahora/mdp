@@ -23,7 +23,9 @@ def mdp(grid_world):
     actions = {"up": (0, -1),
                "right": (1,0),
                "down": (0,1),
-               "left": (0,-1)}
+               "left": (0,-1),
+               "jump_left": (0,-2),
+               "jump_right": (0,2)}
                # "jump": {
                #     "left": (-2,0),
                #     "right": (2,0)
@@ -55,6 +57,12 @@ def valid_move(s,a,s_prime):
         # You can only go up if previous state was a 6
         if states[s]["tile"] == 6:
             return s_prime
+    if a == "jump_right":
+        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+            return s_prime
+    if a == "jump_left":
+        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+            return s_prime
     if a == "left":
         if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
             return s_prime
@@ -84,6 +92,10 @@ def T(s, a):
         action = (-1,0)
     if a == "right":
         action = (0,1)
+    if a == "jump_right":
+        action = (0,2)
+    if a == "jump_left":
+        action = (0,-2)
     if a == "left":
         action = (0,-1)
     if a == "down":
@@ -140,8 +152,12 @@ def find_goal_and_prizes(grid_world, states):
     for i in range(len(grid_world)):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
-          if grid_world[i][j] == 8 or  grid_world[i][j] == 9 or grid_world[i][j] == 10:
-              states[(i,j)]["living_reward"] = 1
+          if grid_world[i][j] == 8: 
+              states[(i,j)]["living_reward"] = 0.1
+          if grid_world[i][j] == 9: 
+              states[(i,j)]["living_reward"] = 0
+          if grid_world[i][j] == 10:
+              states[(i,j)]["living_reward"] = 0
         # print("")
           
 
