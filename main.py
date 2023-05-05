@@ -15,8 +15,6 @@ class Agent(threading.Thread):
         self.name = name
         self.counter = counter
         self.show_grid_info = show_grid_info
-        self.mk_flag = True
-        self.mk_optimal_policy = {}
 
         self.game = []
         self.move_grid = []
@@ -35,21 +33,22 @@ class Agent(threading.Thread):
     #      YOUR SUPER COOL ARTIFICIAL INTELLIGENCE HERE!!!      #
     #############################################################
     def ai_function(self):
-        # To send a key stroke to the game, use self.game.on_key_press() method
+        ai = markov.Markovs.get_instance()
 
         # print("In AI fn")
         current_position = (self.tanuki_r, self.tanuki_c)
         space = self.move_grid
-        if self.mk_flag:
+        if ai.flag:
             print("here")
-            self.mk_flag = False
-            self.optimal_policy = markov.mdp(space)
+            ai.flag = False
+            ai.optimal_policy = markov.mdp(space)
 
         if markov.states[current_position]["living_reward"] > 0:
             print("goal")
-            self.mk_flag = True
+            ai.flag = True
             space[current_position[0]][current_position[1]] = 1
-        current_move = self.optimal_policy[current_position]
+        current_move = ai.optimal_policy[current_position]
+        previous_move = current_move
         # pseudo
         # if we reached a goal then make sure to remove the item at theat point
         # and then recall the mdp
@@ -63,12 +62,18 @@ class Agent(threading.Thread):
               self.game.on_key_press(arcade.key.DOWN, None)
            case "up":
               self.game.on_key_press(arcade.key.UP, None)
-           case "jump_right":
-              self.game.on_key_press(arcade.key.RIGHT, None)
-              self.game.on_key_press(arcade.key.SPACE, None)
            case "jump_left":
-              self.game.on_key_press(arcade.key.LEFT, None)
-              self.game.on_key_press(arcade.key.SPACE, None)
+              if previous_move == "left":
+                  self.game.on_key_press(arcade.key.SPACE, None)
+              else:
+                  self.game.on_key_press(arcade.key.LEFT, None)
+                  self.game.on_key_press(arcade.key.SPACE, None)
+           case "jump_right":
+              if previous_move == "right":
+                  self.game.on_key_press(arcade.key.SPACE, None)
+              else:
+                  self.game.on_key_press(arcade.key.RIGHT, None)
+                  self.game.on_key_press(arcade.key.SPACE, None)
 
 
         return

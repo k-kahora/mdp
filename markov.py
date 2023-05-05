@@ -1,5 +1,25 @@
 # current pos must be a tulpe
 # map is the grid world
+
+# Singleton
+class Markovs:
+    __instance = None
+    flag = True
+    opitmal_policy = {}
+    previous_move = "up"
+
+    def __init__(self):
+        if Markovs.__instance != None:
+            raise Exception("Singeleton class cannot be instanciated more than once")
+        else:
+            Markovs.__instance = self
+
+    @staticmethod
+    def get_instance():
+        if Markovs.__instance == None:
+            Markovs()
+        return Markovs.__instance
+
 states = {}
 def mdp(grid_world):
     # Easily adjust living_reward to get differnt policys
@@ -148,12 +168,9 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           if grid_world[i][j] == 8: 
-              states[(i,j)]["living_reward"] = 0.1
+              states[(i,j)]["living_reward"] = 1
           if grid_world[i][j] == 9: 
               states[(i,j)]["living_reward"] = 0.5
           if grid_world[i][j] == 10:
-              states[(i,j)]["living_reward"] = 1
+              states[(i,j)]["living_reward"] = 0.9
         # print("")
-          
-
-
