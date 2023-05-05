@@ -68,6 +68,9 @@ def valid_move(s,a,s_prime):
     up_check = check_bounds(s_prime, (s_prime[0] - 1, s_prime[1]))
     right_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
     left_check = check_bounds(s_prime,  (s_prime[0] + 1, s_prime[1]))
+
+    #spike_check
+
     if a == "up":
         # You can only go up if previous state was a 6
         if states[s]["tile"] == 6:
@@ -148,11 +151,6 @@ def value_iteration(S, A, gamma=0.9):
             for a in A:
                 s_next = T(s,a)
                 Q[a] = states[s_next]["living_reward"] + gamma * V_prev[s_next]
-
-            # print(s_next)
-            # if count_s == 3:
-            #     return
-
             V[s] = max(Q.values())
             optimal_policy[s] = max(Q, key=Q.get)
             
