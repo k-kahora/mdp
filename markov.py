@@ -1,10 +1,5 @@
 # current pos must be a tulpe
 # map is the grid world
-
-    
-
-
-
 states = {}
 def mdp(grid_world):
     # Easily adjust living_reward to get differnt policys
@@ -155,9 +150,9 @@ def find_goal_and_prizes(grid_world, states):
           if grid_world[i][j] == 8: 
               states[(i,j)]["living_reward"] = 0.1
           if grid_world[i][j] == 9: 
-              states[(i,j)]["living_reward"] = 0
+              states[(i,j)]["living_reward"] = 0.5
           if grid_world[i][j] == 10:
-              states[(i,j)]["living_reward"] = 0
+              states[(i,j)]["living_reward"] = 1
         # print("")
           
 
