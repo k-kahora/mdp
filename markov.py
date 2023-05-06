@@ -79,16 +79,16 @@ def valid_move(s,a,s_prime):
         if states[s]["tile"] == 6:
             return s_prime
     if a == "jump_right":
-        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+        if states[left_check]["tile"] != 1:
             return s_prime
     if a == "jump_left":
-        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+        if states[left_check]["tile"] != 1:
             return s_prime
     if a == "left":
-        if states[left_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+        if states[left_check]["tile"] != 1:
             return s_prime
     if a == "right":
-        if states[right_check]["tile"] == 4 or states[right_check]["tile"] == 6:
+        if states[left_check]["tile"] != 1:
             return s_prime
     if a == "down":
         if states[s_prime]["tile"] == 6:
@@ -141,7 +141,7 @@ def value_iteration(S, A, gamma=0.9, theta=0.0001):
     count = 0
     # test case
     print(T((1,17),"left"))
-    print(states[(1,17)]["living_reward"])
+    print(states[(1,17)]["tile"])
     optimal_policy = {s: 0 for s in S}
     while True: #count <= MAX_ITERATIONS:
         # Dynamic programming keep copy of previous calculation
@@ -174,11 +174,11 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           if grid_world[i][j] == 8: 
-              states[(i,j)]["living_reward"] = 100
+              states[(i,j)]["living_reward"] = 2
           if grid_world[i][j] == 9: 
-              states[(i,j)]["living_reward"] = 100
+              states[(i,j)]["living_reward"] = 1
           if grid_world[i][j] == 7:
               states[(i,j)]["living_reward"] = 0
           if grid_world[i][j] == 10:
-              states[(i,j)]["living_reward"] = 100
+              states[(i,j)]["living_reward"] = 1
         # print("")

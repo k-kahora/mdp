@@ -40,13 +40,13 @@ class Agent(threading.Thread):
         if ai.flag:
             ai.flag = False
             ai.optimal_policy = markov.mdp(space)
+            print(ai.optimal_policy)
+            print("current_pos")
+            print(space)
+            print(current_position)
 
         if markov.states[current_position]["living_reward"] > 0:
             space[current_position[0]][current_position[1]] = 1
-            print(ai.optimal_policy)
-            print(space)
-            print("current_pos")
-            print(current_position)
             ai.flag = True
         current_move = ai.optimal_policy[current_position]
         previous_move = current_move
