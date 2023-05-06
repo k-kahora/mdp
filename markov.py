@@ -71,6 +71,9 @@ def valid_move(s,a,s_prime):
 
     #spike_check
 
+    if states[s_prime]["tile"] == 7:
+        return s
+
     if a == "up":
         # You can only go up if previous state was a 6
         if states[s]["tile"] == 6:
@@ -128,33 +131,38 @@ def T(s, a):
 
     # S is all states
     # A is all actions (they are all determinisc to no probabilities needed)
-def value_iteration(S, A, gamma=0.9):
+def value_iteration(S, A, gamma=0.9, theta=0.0001):
     # One to start to see if each iteration is making sense
     # As I gain confidence in the algo I will increase iteratiions 
-    MAX_ITERATIONS = 1000
+    MAX_ITERATIONS = 2000
 
     V = {s: 0 for s in S}
 
     count = 0
     # test case
-    # print(T((9,4),"left"))
-    # print(states[(11,1)]["tile"])
+    print(T((1,17),"left"))
+    print(states[(1,17)]["living_reward"])
     optimal_policy = {s: 0 for s in S}
-    while count <= MAX_ITERATIONS:
+    while True: #count <= MAX_ITERATIONS:
         # Dynamic programming keep copy of previous calculation
         V_prev = V.copy()
         count += 1
         count_s = 0
+        delta = 0
         for s in S:
             count_s += 1
             Q = {}
             for a in A:
                 s_next = T(s,a)
                 Q[a] = states[s_next]["living_reward"] + gamma * V_prev[s_next]
+            v = V[s]
             V[s] = max(Q.values())
+            delta = max(delta, abs(v - V[s]))
             optimal_policy[s] = max(Q, key=Q.get)
+        # Convergence
+        if delta < theta:
+            return optimal_policy
             
-    return optimal_policy
     # First iteration will be all zero's
     # Next iteraiton will set rewards based on locatioin of the rewards
     # print(V)
@@ -166,9 +174,11 @@ def find_goal_and_prizes(grid_world, states):
         for j in range(0, len(grid_world[i])):
           # print(grid_world[i][j], end="")
           if grid_world[i][j] == 8: 
-              states[(i,j)]["living_reward"] = 1
+              states[(i,j)]["living_reward"] = 100
           if grid_world[i][j] == 9: 
-              states[(i,j)]["living_reward"] = 0.5
+              states[(i,j)]["living_reward"] = 100
+          if grid_world[i][j] == 7:
+              states[(i,j)]["living_reward"] = 0
           if grid_world[i][j] == 10:
-              states[(i,j)]["living_reward"] = 0.9
+              states[(i,j)]["living_reward"] = 100
         # print("")

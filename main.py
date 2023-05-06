@@ -34,19 +34,20 @@ class Agent(threading.Thread):
     #############################################################
     def ai_function(self):
         ai = markov.Markovs.get_instance()
-
         # print("In AI fn")
         current_position = (self.tanuki_r, self.tanuki_c)
         space = self.move_grid
         if ai.flag:
-            print("here")
             ai.flag = False
             ai.optimal_policy = markov.mdp(space)
 
         if markov.states[current_position]["living_reward"] > 0:
-            print("goal")
-            ai.flag = True
             space[current_position[0]][current_position[1]] = 1
+            print(ai.optimal_policy)
+            print(space)
+            print("current_pos")
+            print(current_position)
+            ai.flag = True
         current_move = ai.optimal_policy[current_position]
         previous_move = current_move
         # pseudo
